@@ -1,12 +1,7 @@
 use std::collections::HashSet;
 
 pub fn part_one(input: &str) -> Option<u32> {
-    Some(
-        input
-            .lines()
-            .map(|line| find_duplicate_priority(line))
-            .sum(),
-    )
+    Some(input.lines().map(find_duplicate_priority).sum())
 }
 
 pub fn part_two(input: &str) -> Option<u32> {
@@ -33,10 +28,8 @@ fn find_duplicate_priority(s: &str) -> u32 {
     for (i, c) in s.chars().enumerate() {
         if i < n / 2 {
             set.insert(c);
-        } else {
-            if set.contains(&c) {
-                return calc_priority(c);
-            }
+        } else if set.contains(&c) {
+            return calc_priority(c);
         }
     }
     0

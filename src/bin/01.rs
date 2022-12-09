@@ -16,7 +16,6 @@ pub fn part_one(input: &str) -> Option<u32> {
     Some(ans)
 }
 
-
 pub fn part_two(input: &str) -> Option<u32> {
     let mut heap = BinaryHeap::new();
     let mut sum = 0;
@@ -42,7 +41,6 @@ pub fn part_two(input: &str) -> Option<u32> {
     }
     Some(ans)
 }
-
 
 fn main() {
     let input = &advent_of_code::read_file("inputs", 1);

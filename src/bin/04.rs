@@ -33,11 +33,10 @@ impl PairRange {
     }
 }
 
-const REGEX: &'static str = r"(?x)(?P<left1>\d+)-(?P<right1>\d+),(?P<left2>\d+)-(?P<right2>\d+)";
+const REGEX: &str = r"(?x)(?P<left1>\d+)-(?P<right1>\d+),(?P<left2>\d+)-(?P<right2>\d+)";
 
 fn parse_input(input: &str) -> Vec<PairRange> {
     let re = Regex::new(REGEX).unwrap();
-
 
     re.captures_iter(input)
         .map(|cap| PairRange {
