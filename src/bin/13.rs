@@ -1,7 +1,5 @@
 use std::cmp::Ordering;
 
-use itertools::Itertools;
-
 fn parse_input(input: &str) -> Vec<Pair> {
     input
         .split("\n\n")
@@ -12,7 +10,7 @@ fn parse_input(input: &str) -> Vec<Pair> {
             let right = Signal::from(parts.next().unwrap());
             Pair { left, right }
         })
-        .collect_vec()
+        .collect()
 }
 
 fn compare(a: &Value, b: &Value) -> Ordering {
@@ -33,7 +31,7 @@ fn compare(a: &Value, b: &Value) -> Ordering {
                 }
             }
             Ordering::Equal
-        },
+        }
         (Value::Int(_), Value::List(_)) => compare(&Value::List(vec![a.clone()]), b),
         (Value::List(_), Value::Int(_)) => compare(a, &Value::List(vec![b.clone()])),
     }
@@ -57,7 +55,31 @@ pub fn part_one(input: &str) -> Option<u32> {
 }
 
 pub fn part_two(input: &str) -> Option<u32> {
-    None
+    let mut signals = input
+        .lines()
+        .into_iter()
+        .filter(|line| !line.is_empty())
+        .map(Signal::from)
+        .collect::<Vec<Signal>>();
+    signals.extend(vec![
+        Signal(Value::List(vec![Value::Int(2)])),
+        Signal(Value::List(vec![Value::Int(6)])),
+    ]);
+    signals.sort_by(|a, b| compare(&a.0, &b.0));
+    let res = signals
+        .iter()
+        .enumerate()
+        .map(|(i, signal)| {
+            if signal.0 == Value::List(vec![Value::Int(2)])
+                || signal.0 == Value::List(vec![Value::Int(6)])
+            {
+                i as u32 + 1
+            } else {
+                1
+            }
+        })
+        .product::<u32>();
+    Some(res)
 }
 
 fn main() {
@@ -78,10 +100,17 @@ impl From<&str> for Signal {
     fn from(s: &str) -> Self {
         let mut nodes = Vec::new();
         let mut stack = Vec::new();
-        for c in s.chars() {
+        let mut index = 0;
+        let chars = s.chars().collect::<Vec<_>>();
+        while index < s.len() {
+            let c = chars[index];
             match c {
                 '0'..='9' => {
-                    let num = c.to_digit(10).unwrap();
+                    let mut num = c.to_digit(10).unwrap();
+                    while index + 1 < s.len() && chars[index + 1].is_alphanumeric() {
+                        index += 1;
+                        num = num * 10 + chars[index].to_digit(10).unwrap();
+                    }
                     if let Some(Value::List(list)) = stack.last_mut() {
                         list.push(Value::Int(num as i32));
                     } else {
@@ -101,12 +130,13 @@ impl From<&str> for Signal {
                 }
                 _ => {}
             }
+            index += 1;
         }
         Self(Value::List(nodes))
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 enum Value {
     Int(i32),
     List(Vec<Value>),
@@ -126,7 +156,7 @@ mod tests {
     #[test]
     fn test_part_two() {
         let input = advent_of_code::read_file("examples", 13);
-        assert_eq!(part_two(&input), None);
+        assert_eq!(part_two(&input), Some(140));
     }
 
     #[test]
