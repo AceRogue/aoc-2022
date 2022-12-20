@@ -12,7 +12,22 @@ pub fn part_one(input: &str) -> Option<u32> {
     }
     Some(total)
 }
-
+pub fn minimum_size(nums: Vec<i32>, max_operations: i32) -> i32 {
+    let (mut left, mut right) = (1, *nums.iter().max().unwrap());
+    while left < right {
+        let mid = (left + right) / 2;
+        let mut operations = 0;
+        for num in nums.iter() {
+            operations += (num - 1) / mid;
+        }
+        if operations <= max_operations {
+            right = mid;
+        } else {
+            left = mid + 1;
+        }
+    }
+    left
+}
 pub fn part_two(input: &str) -> Option<u32> {
     let cubes = parse_input(input);
     let (min_x, min_y, min_z, max_x, max_y, max_z) = cubes.clone().into_iter().fold(
@@ -117,7 +132,7 @@ impl Cube {
 impl From<&str> for Cube {
     fn from(s: &str) -> Self {
         let nums = s
-            .split(",")
+            .split(',')
             .map(|s| s.parse::<i32>().unwrap())
             .collect::<Vec<_>>();
         Self {
