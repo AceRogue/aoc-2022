@@ -6,7 +6,7 @@ pub fn part_one(input: &str) -> Option<i64> {
     Some((grid.cur_pos.0 as i64 + 1) * 1000 + (grid.cur_pos.1 as i64 + 1) * 4 + grid.facing.score())
 }
 
-pub fn part_two(input: &str) -> Option<u32> {
+pub fn part_two(_input: &str) -> Option<u32> {
     None
 }
 
@@ -85,14 +85,14 @@ impl Grid {
             }
             Command::Move(num) => {
                 for _ in 0..*num {
-                    self.cur_pos = self.move_direction(self.cur_pos.clone(), &self.facing.clone());
+                    self.cur_pos = self.move_direction(self.cur_pos, &self.facing.clone());
                 }
             }
         }
     }
 
     fn move_direction(&self, cur: (i32, i32), dir: &Direction) -> (i32, i32) {
-        let mut new_pos = cur.clone();
+        let mut new_pos = cur;
 
         loop {
             // while self.grid[new_pos.0 as usize][new_pos.1 as usize] != '.' {
@@ -133,7 +133,7 @@ fn parse_input(input: &str) -> (Grid, Vec<Command>) {
     let mut lines = input.lines();
     let mut max_column = 0;
     // build map
-    while let Some(line) = lines.next() {
+    for line in lines.by_ref() {
         let mut row = Vec::new();
         if line.is_empty() {
             break;
