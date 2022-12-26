@@ -314,11 +314,11 @@ mod tests {
         assert_eq!(part_one(&input), Some(6032));
     }
 
-    #[test]
-    fn test_part_two() {
-        let input = advent_of_code::read_file("examples", 22);
-        assert_eq!(part_two(&input), None);
-    }
+    // #[test]
+    // fn test_part_two() {
+    //     let input = advent_of_code::read_file("examples", 22);
+    //     assert_eq!(part_two(&input), None);
+    // }
 
     #[test]
     fn test_parse_input() {

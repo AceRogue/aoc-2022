@@ -1,4 +1,7 @@
-use std::{collections::{BinaryHeap, HashSet}, cmp::Ordering};
+use std::{
+    cmp::Ordering,
+    collections::{BinaryHeap, HashSet},
+};
 
 pub fn part_one(input: &str) -> Option<u32> {
     let climbing = Climbing::from(input);
@@ -11,7 +14,7 @@ pub fn part_two(input: &str) -> Option<u32> {
     for (i, row) in climbing.hill.iter().enumerate() {
         for (j, &c) in row.iter().enumerate() {
             if c == 0 {
-                let step = bfs(&climbing.hill, Position{x: i, y: j}, climbing.end);
+                let step = bfs(&climbing.hill, Position { x: i, y: j }, climbing.end);
                 ans = ans.min(step);
             }
         }
@@ -30,11 +33,7 @@ fn bfs(hill: &Vec<Vec<u32>>, start: Position, end: Position) -> u32 {
         }
         for &dir in &[(1, 0), (0, 1), (-1, 0), (0, -1)] {
             let (next_x, next_y) = (pos.x as i32 + dir.0, pos.y as i32 + dir.1);
-            if next_x >= 0
-                && next_x < m as i32
-                && next_y >= 0
-                && next_y < n as i32
-            {
+            if next_x >= 0 && next_x < m as i32 && next_y >= 0 && next_y < n as i32 {
                 let index = next_x as usize * n + next_y as usize;
                 if visited.contains(&index) {
                     continue;

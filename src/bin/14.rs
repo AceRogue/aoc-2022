@@ -27,7 +27,7 @@ struct Grid {
     max_y: usize,
 }
 
-fn get_max_coord(paths: &[Path]) -> ((i32, i32),(i32, i32)) {
+fn get_max_coord(paths: &[Path]) -> ((i32, i32), (i32, i32)) {
     let ((_, x_max), (y_min, y_max)) = paths.iter().map(|path| path.min_max_cood()).fold(
         ((i32::MAX, i32::MIN), (i32::MAX, i32::MIN)),
         |acc, item| {
@@ -90,9 +90,9 @@ impl Grid {
         }
         t
     }
-    
+
     fn simulate_one(&mut self) -> bool {
-        let (mut x, mut y) = (0, 500 - self.min_y); 
+        let (mut x, mut y) = (0, 500 - self.min_y);
         loop {
             if self.grid[x][y] != '.' {
                 return true;
@@ -118,7 +118,7 @@ impl Grid {
                     next_y = y as i32 + 1;
                 }
 
-                if next_y > self.max_y as i32{
+                if next_y > self.max_y as i32 {
                     return true;
                 }
                 if self.grid[next_x][next_y as usize] == '.' {
@@ -138,7 +138,8 @@ impl Grid {
 struct Path(Vec<Coordinate>);
 
 impl From<&str> for Path {
-    fn from(s: &str) -> Self { let coords = s
+    fn from(s: &str) -> Self {
+        let coords = s
             .split("->")
             .map(|item| {
                 let mut iter = item.trim().split(',');

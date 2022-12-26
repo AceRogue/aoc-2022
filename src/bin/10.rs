@@ -75,9 +75,6 @@ impl Sys {
             self.crt_row.clear();
         }
     }
-
-
-
 }
 
 #[derive(Debug, Clone)]

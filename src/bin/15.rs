@@ -81,7 +81,6 @@ fn merge_intervals(intervals: &mut Vec<(i32, i32)>) {
     }
 }
 
-
 #[derive(Debug)]
 struct SensorBeaconPair {
     sensor_x: i32,

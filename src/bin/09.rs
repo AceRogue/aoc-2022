@@ -69,11 +69,14 @@ impl Rope {
 
     fn step_tail(&mut self, index: usize) {
         if !self.is_adjacent(index) {
-            let diff = (self.knots[index].x - self.knots[index - 1].x, self.knots[index].y - self.knots[index - 1].y);
+            let diff = (
+                self.knots[index].x - self.knots[index - 1].x,
+                self.knots[index].y - self.knots[index - 1].y,
+            );
             let l = diff.0.abs().max(diff.1.abs());
             let m = (diff.0 / l, diff.1 / l);
-            self.knots[index].x = self.knots[index-1].x + m.0;
-            self.knots[index].y = self.knots[index-1].y + m.1;
+            self.knots[index].x = self.knots[index - 1].x + m.0;
+            self.knots[index].y = self.knots[index - 1].y + m.1;
         }
     }
 

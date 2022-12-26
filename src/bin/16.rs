@@ -9,8 +9,6 @@ pub fn part_one(input: &str) -> Option<u32> {
     Some(max_pressure(&valve_map, 30))
 }
 
-
-
 pub fn part_two(input: &str) -> Option<u32> {
     let valve_map = build_valves(input);
     let nodes: BTreeSet<&str> = valve_map

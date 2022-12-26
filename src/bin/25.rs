@@ -1,5 +1,9 @@
 pub fn part_one(input: &str) -> Option<String> {
-    let sum: i64 = input.lines().map(|line| Snafu(line.to_string())).map(Into::<i64>::into).sum();
+    let sum: i64 = input
+        .lines()
+        .map(|line| Snafu(line.to_string()))
+        .map(Into::<i64>::into)
+        .sum();
 
     Some(Snafu::new(sum).0)
 }
@@ -23,7 +27,7 @@ impl Snafu {
         while base > 0 {
             let digit = value / base;
             res.push(digit);
-            value %= base; 
+            value %= base;
             base /= 5;
         }
         let mut ans = String::new();
@@ -49,7 +53,6 @@ impl Snafu {
                 }
                 _ => unreachable!(),
             }
-            
         }
         let mut ans = ans.chars().rev().collect::<String>();
         while ans.starts_with('0') {
