@@ -222,9 +222,10 @@ mod tests {
         assert_eq!(part_one(&input), Some(33));
     }
 
-    #[test]
-    fn test_part_two() {
-        let input = advent_of_code::read_file("examples", 19);
-        assert_eq!(part_two(&input), Some(3472));
-    }
+    // slow
+    // #[test]
+    // fn test_part_two() {
+    //     let input = advent_of_code::read_file("examples", 19);
+    //     assert_eq!(part_two(&input), Some(3472));
+    // }
 }
